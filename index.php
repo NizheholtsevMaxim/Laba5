@@ -51,7 +51,7 @@
               <li class="active"><a href="#">Поиск</a></li>
               <li><a href="#">Результаты поиска</a></li>
               <li><a href="#">Пункт 3</a></li>
-               <li><a href="#">Пункт 4</a></li>
+              <li><a href="#">Пункт 4</a></li>
             </ul>
           </nav>
         </div>
@@ -61,8 +61,8 @@
         <div id='var-7' class="container">
           <h1 class="hide">Поиск</h1>
           <div class="holder">
- <h1>Лабораторноя работа №4</h1>
-       
+            <h1>Лабораторноя работа №4</h1>
+
 
             <!-- Form login -->
 
@@ -73,7 +73,8 @@
               <h2>Вариант №0</h2>
 
               <?php
-              //Данные бызы данных для соединения
+                
+              //Данные  для соединения с БД
               $db_name = 'maxim';
               $user = 'root';
               $pass = '';
@@ -81,13 +82,12 @@
 
               try {
                 //Соединение с базой данных
-                $dbh = new PDO('mysql:host=localhost;dbname=' . $db_name, $user, $pass);
+                $pdo = new PDO('mysql:host=localhost;dbname=' . $db_name, $user, $pass);
 
                 //выбираем таблицу из базы данных
-                $query = $dbh->query('
+                $stmt = $pdo->prepare('
                   SELECT 
                     l.name, 
-                    l.year, 
                     b.FID_Book,
                     b.FID_Author,
                     a.ID_Authors,
@@ -100,59 +100,55 @@
                     ON b.FID_Author = a.ID_Authors
                 ');
 
+                $stmt->execute();
+                
                 $titles = array();
                 $names = array();
-
-                //Обрабатываем полученные данные из базы данных
-                foreach ($query as $row) {
-                    $titles[] = $row[0];
+                
+                //Обрабатываем полученные данные из базы данных и записываем в соответсвующий массив
+                foreach ($stmt as $row) {
+                  $titles[] = $row[0];
                   $names[] = $row['name'];
-                  //print $row['author'];
                 }
+                //Оставляем только уникальные значения массивов
                 $result_titles = array_unique($titles);
                 $result_names = array_unique($names);
 
-                //print_r($result_titles);
-                
-                
-                
                 // соединение больше не нужно, закрываем
-                $query = null;
-                $dbh = null;
+                $stmt = null;
+                $pdo = null;
               } catch (PDOException $e) {
                 //выводим ошибку
                 print "Error!: " . $e->getMessage() . "<br/>";
               }
-              
-              
               ?>
 
 
-               <form class="login" method="post" action="result.php">
+              <form class="login" method="post" action="result.php">
 
                 <p class="form-row">
                   <label>Выберите название:</label>
                   <select name="name">
                     <option value="all">Все</option>
-                    <?php foreach ($result_titles as $title) {?>
-                      <option value="<?php print $title;?>"><?php print $title;?></option>
-                    <?php }?>
+                    <?php foreach ($result_titles as $title) { ?>
+                      <option value="<?php print $title; ?>"><?php print $title; ?></option>
+                    <?php } ?>
                   </select>
                 </p>
                 <div class="form-row">
                   <label>Выберите временной период  годах:</label>
                   <div class="flex-box">
-                    <input type="text" class="input-text" name="start_date" id="start_date" placeholder="1990" value="<?php print $start_date ? $start_date : 1900;?>">
-                    <input type="text" class="input-text" name="end_date" id="end_date" placeholder="2021" value="<?php print $end_date ? $end_date : 2021;?>">
+                    <input type="text" class="input-text" name="start_date" id="start_date" placeholder="1990" value="1900">
+                    <input type="text" class="input-text" name="end_date" id="end_date" placeholder="2021" value="2021">
                   </div>
                 </div>
                 <p class="form-row">
                   <label>Выберите имя автора:</label>
                   <select name="author">
                     <option value="all">Все</option>
-                    <?php foreach ($result_names as $name) {?>
-                      <option value="<?php print $name;?>"><?php print $name;?></option>
-                    <?php }?>
+                    <?php foreach ($result_names as $name) { ?>
+                      <option value="<?php print $name; ?>"><?php print $name; ?></option>
+                    <?php } ?>
                   </select>
                 </p>
                 <p class="form-row">

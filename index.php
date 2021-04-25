@@ -133,6 +133,7 @@
                 <p class="form-row">
                   <label>Выберите название:</label>
                   <select name="name">
+                    <option value="all">Все</option>
                     <?php foreach ($result_titles as $title) {?>
                       <option value="<?php print $title;?>"><?php print $title;?></option>
                     <?php }?>
@@ -141,13 +142,14 @@
                 <div class="form-row">
                   <label>Выберите временной период  годах:</label>
                   <div class="flex-box">
-                    <input type="text" class="input-text" name="start_date" id="start_date" placeholder="1990" value="">
-                    <input type="text" class="input-text" name="end_date" id="end_date" placeholder="2021" value="">
+                    <input type="text" class="input-text" name="start_date" id="start_date" placeholder="1990" value="<?php print $start_date ? $start_date : 1900;?>">
+                    <input type="text" class="input-text" name="end_date" id="end_date" placeholder="2021" value="<?php print $end_date ? $end_date : 2021;?>">
                   </div>
                 </div>
                 <p class="form-row">
                   <label>Выберите имя автора:</label>
                   <select name="author">
+                    <option value="all">Все</option>
                     <?php foreach ($result_names as $name) {?>
                       <option value="<?php print $name;?>"><?php print $name;?></option>
                     <?php }?>

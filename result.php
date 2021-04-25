@@ -61,16 +61,17 @@
 
 
             <div class="login-wrapper__each login-wrapper__each-2">
-
-
-              <h2>Разультаты поиска</h2>
-
-              <?php
-              // Данные из формы запроса
+<?php 
+// Данные из формы запроса
               $name = $_POST['name'];
               $start_date = $_POST['start_date'];
               $end_date = $_POST['end_date'];
               $author = $_POST['author'];
+?>
+              <h2>Разультаты поиска (<?php print ($name=='all' ? '' : $name). ' '. ($author=='all' ? '' : $author) . ' ' . $start_date . '-' . $end_date;?>)</h2>
+
+              <?php
+              
 
               //Данные бызы данных для соединения
               $db_name = 'maxim';
@@ -81,9 +82,9 @@
               try {
                 //Соединение с базой данных
                 $pdo = new PDO('mysql:host=localhost;dbname=' . $db_name, $user, $pass);
-//$stmt = $pdo->prepare('SELECT name FROM users WHERE email = :email');
+
                 //выбираем таблицу из базы данных
-                $stmt = $pdo->prepare('
+                $stmt = $pdo->prepare("
                   SELECT
                     l.name,
                     l.year,
@@ -102,13 +103,15 @@
                   INNER JOIN authors a
                     ON b.FID_Author = a.ID_Authors
                   WHERE 
-                    a.name = :author
-                ');
+                    l.name LIKE :name
+                   AND
+                    a.name LIKE :author
+                   AND
+                   l.year BETWEEN :start_date AND :end_date;
+");
 
 
-                // $stmt->execute(array('name' => $name));
-                //stmt->execute(array('year' => $year));
-                $stmt->execute(array('author' => $author));
+                $stmt->execute(array('name' => $name=='all' ? '%' : $name, 'author' => $author=='all' ? '%' : $author, 'start_date'=>$start_date, 'end_date' => $end_date));
                 ?>
 
                 <table>
@@ -129,7 +132,6 @@
                         <td><?php print($row[0]); ?></td>
                         <td><?php print($row['ISBN']); ?></td>
                         <td><?php print($row['publisher']); ?></td>
-
                         <td><?php print($row['year']); ?></td>
                         <td><?php print($row['quantity']); ?></td>
                         <td><?php print($row['name']); ?></td>
@@ -145,19 +147,6 @@
               </div>
 
               <?php
-              $titles = array();
-              $names = array();
-
-              //Обрабатываем полученные данные из базы данных
-//                foreach ($query as $row) {
-//                  $titles[] = $row[0];
-//                  $names[] = $row['name'];
-//                  //print $row['author'];
-//                }
-//                $result_titles = array_unique($titles);
-//                $result_names = array_unique($names);
-              //print_r($result_titles);
-              // соединение больше не нужно, закрываем
               $query = null;
               $dbh = null;
             } catch (PDOException $e) {

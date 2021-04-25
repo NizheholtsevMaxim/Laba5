@@ -61,18 +61,17 @@
 
 
             <div class="login-wrapper__each login-wrapper__each-2">
-<?php 
-// Данные из формы запроса
+              <?php
+              // Данные из формы запроса
               $name = $_POST['name'];
               $start_date = $_POST['start_date'];
               $end_date = $_POST['end_date'];
               $author = $_POST['author'];
-?>
-              <h2>Разультаты поиска (<?php print ($name=='all' ? '' : $name). ' '. ($author=='all' ? '' : $author) . ' ' . $start_date . '-' . $end_date;?>)</h2>
+              ?>
+              
+              <h2>Разультаты поиска (<?php print ($name == 'all' ? '' : $name) . ' ' . ($author == 'all' ? '' : $author) . ' ' . $start_date . '-' . $end_date; ?>)</h2>
 
               <?php
-              
-
               //Данные бызы данных для соединения
               $db_name = 'maxim';
               $user = 'root';
@@ -111,7 +110,7 @@
 ");
 
 
-                $stmt->execute(array('name' => $name=='all' ? '%' : $name, 'author' => $author=='all' ? '%' : $author, 'start_date'=>$start_date, 'end_date' => $end_date));
+                $stmt->execute(array('name' => $name == 'all' ? '%' : $name, 'author' => $author == 'all' ? '%' : $author, 'start_date' => $start_date, 'end_date' => $end_date));
                 ?>
 
                 <table>
@@ -127,7 +126,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($stmt as $row) { ?>
+  <?php foreach ($stmt as $row) { ?>
                       <tr>
                         <td><?php print($row[0]); ?></td>
                         <td><?php print($row['ISBN']); ?></td>
@@ -138,7 +137,7 @@
                         <td><?php print($row['literature']); ?></td>
                       </tr>
 
-                    <?php } ?>
+  <?php } ?>
 
                   </tbody>
                 </table>
@@ -146,14 +145,14 @@
 
               </div>
 
-              <?php
-              $query = null;
-              $dbh = null;
-            } catch (PDOException $e) {
-              //выводим ошибку
-              print "Error!: " . $e->getMessage() . "<br/>";
-            }
-            ?>
+  <?php
+  $stmt = null;
+  $pdo = null;
+} catch (PDOException $e) {
+  //выводим ошибку
+  print "Error!: " . $e->getMessage() . "<br/>";
+}
+?>
 
 
 

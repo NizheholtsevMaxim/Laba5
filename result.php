@@ -68,7 +68,7 @@
               $end_date = $_POST['end_date'];
               $author = $_POST['author'];
               ?>
-              
+
               <h2>Разультаты поиска (<?php print ($name == 'all' ? '' : $name) . ' ' . ($author == 'all' ? '' : $author) . ' ' . $start_date . '-' . $end_date; ?>)</h2>
 
               <?php
@@ -101,7 +101,7 @@
                     ON b.FID_Book = l.ID_Book
                   INNER JOIN authors a
                     ON b.FID_Author = a.ID_Authors
-                  WHERE 
+                  WHERE
                     l.name LIKE :name
                    AND
                     a.name LIKE :author
@@ -110,7 +110,13 @@
 ");
 
 
-                $stmt->execute(array('name' => $name == 'all' ? '%' : $name, 'author' => $author == 'all' ? '%' : $author, 'start_date' => $start_date, 'end_date' => $end_date));
+                $stmt->execute(array(
+                    'name' => $name == 'all' ? '%' : $name,
+                    'author' => $author == 'all' ? '%' : $author,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date
+                        )
+                );
                 ?>
 
                 <table>
@@ -126,7 +132,7 @@
                     </tr>
                   </thead>
                   <tbody>
-  <?php foreach ($stmt as $row) { ?>
+                    <?php foreach ($stmt as $row) { ?>
                       <tr>
                         <td><?php print($row[0]); ?></td>
                         <td><?php print($row['ISBN']); ?></td>
@@ -137,7 +143,7 @@
                         <td><?php print($row['literature']); ?></td>
                       </tr>
 
-  <?php } ?>
+                    <?php } ?>
 
                   </tbody>
                 </table>
@@ -145,14 +151,14 @@
 
               </div>
 
-  <?php
-  $stmt = null;
-  $pdo = null;
-} catch (PDOException $e) {
-  //выводим ошибку
-  print "Error!: " . $e->getMessage() . "<br/>";
-}
-?>
+              <?php
+              $stmt = null;
+              $pdo = null;
+            } catch (PDOException $e) {
+              //выводим ошибку
+              print "Error!: " . $e->getMessage() . "<br/>";
+            }
+            ?>
 
 
 

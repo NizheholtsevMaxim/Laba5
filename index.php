@@ -4,7 +4,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Laba 5</title>
     <link media="all" rel="stylesheet" href="styles.css">
     <link media="all" rel="stylesheet" href="calculator.css">
@@ -21,12 +20,11 @@
         -ms-text-size-adjust: none;
       }
     </style>
-=======
     <title>Laba 4</title>
->>>>>>> origin/master
+
   </head>
   <body class="home-page">
-<<<<<<< HEAD
+
     <div id="wrapper">
       <header id="header">
         <div class="panel">
@@ -63,10 +61,9 @@
         <div id='var-7' class="container">
           <h1 class="hide">Поиск</h1>
           <div class="holder">
-=======
-  <h1>Лабораторноя работа №4</h1>
+ <h1>Лабораторноя работа №4</h1>
        
->>>>>>> origin/master
+
             <!-- Form login -->
 
 
@@ -129,23 +126,6 @@
               
               
               ?>
-<<<<<<< HEAD
-=======
-              
-                <?php if ($login_exist) { ?>
-                  <div class="message success">
-                    <p>Вы залогинены!</p>
-                  </div>
-                <?php } else { ?>
-                  <div class="message error">
-                    <p>Извините, но имя и пароль не существуют..</p>
-                  </div>
-                <?php } ?>
-              <?php } ?>
-
-              
-              <form class="login" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
->>>>>>> origin/master
 
 
                <form class="login" method="post" action="result.php">
@@ -189,14 +169,12 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <footer id="footer">
         <ul>
           <li>© Copyright 2021 Maxim</li>
         </ul>
       </footer>
-=======
->>>>>>> origin/master
+
     </div>  
   </body>
 </html>
